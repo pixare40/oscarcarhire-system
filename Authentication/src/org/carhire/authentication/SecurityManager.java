@@ -6,11 +6,17 @@
 
 package org.carhire.authentication;
 
+import dataentities.Staff;
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+
 /**
  *
  * @author Kabaji Egara
  */
 public class SecurityManager {
+    public boolean isAuthenticated;
      public static boolean login(String username, String password) {
       if(username.equals("admin") && password.equals("password")) {
          return true;
@@ -18,5 +24,13 @@ public class SecurityManager {
          return false;
       }
    }
+
+    public boolean isIsAuthenticated() {
+        return isAuthenticated;
+    }
+
+    public void setIsAuthenticated(boolean isAuthenticated) {
+        this.isAuthenticated = isAuthenticated;
+    }
     
 }

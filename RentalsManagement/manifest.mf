@@ -1,5 +1,6 @@
 Manifest-Version: 1.0
 OpenIDE-Module: org.carhire.rentals
+OpenIDE-Module-Install: org/carhire/rentals/Installer.class
 OpenIDE-Module-Localizing-Bundle: org/carhire/rentals/Bundle.properties
 OpenIDE-Module-Requires: org.openide.windows.WindowManager
 OpenIDE-Module-Specification-Version: 1.0

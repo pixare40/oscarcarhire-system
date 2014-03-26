@@ -1,6 +1,7 @@
 Manifest-Version: 1.0
 OpenIDE-Module: org.carhire.authentication
 OpenIDE-Module-Install: org/carhire/authentication/Installer.class
+OpenIDE-Module-Layer: org/carhire/authentication/layer.xml
 OpenIDE-Module-Localizing-Bundle: org/carhire/authentication/Bundle.properties
 OpenIDE-Module-Specification-Version: 1.0
 

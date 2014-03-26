@@ -5,7 +5,7 @@
  */
 package org.carhire.rentals;
 
-import dataentities.Vehicle;
+import dataentities.*;
 import java.util.Vector;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -15,6 +15,8 @@ import org.openide.awt.ActionReference;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 import javax.swing.table.AbstractTableModel;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 
 /**
  * Top component which displays something.
@@ -72,8 +74,8 @@ public final class VehicleTopComponent extends TopComponent{
         jSeparator2 = new javax.swing.JSeparator();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        editVehicle = new javax.swing.JButton();
+        deleteVehicle = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -106,9 +108,19 @@ public final class VehicleTopComponent extends TopComponent{
         jTable1.setModel(vehicles);
         jScrollPane2.setViewportView(jTable1);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(VehicleTopComponent.class, "VehicleTopComponent.jButton1.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(editVehicle, org.openide.util.NbBundle.getMessage(VehicleTopComponent.class, "VehicleTopComponent.editVehicle.text")); // NOI18N
+        editVehicle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editVehicleActionPerformed(evt);
+            }
+        });
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton2, org.openide.util.NbBundle.getMessage(VehicleTopComponent.class, "VehicleTopComponent.jButton2.text")); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(deleteVehicle, org.openide.util.NbBundle.getMessage(VehicleTopComponent.class, "VehicleTopComponent.deleteVehicle.text")); // NOI18N
+        deleteVehicle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteVehicleActionPerformed(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton3, org.openide.util.NbBundle.getMessage(VehicleTopComponent.class, "VehicleTopComponent.jButton3.text")); // NOI18N
 
@@ -150,7 +162,7 @@ public final class VehicleTopComponent extends TopComponent{
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(39, 39, 39)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -170,9 +182,9 @@ public final class VehicleTopComponent extends TopComponent{
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jButton3)
                                 .addGap(200, 200, 200)
-                                .addComponent(jButton1)
+                                .addComponent(editVehicle)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton2)
+                                .addComponent(deleteVehicle)
                                 .addGap(37, 37, 37))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,8 +211,8 @@ public final class VehicleTopComponent extends TopComponent{
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton3)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton1)
-                                .addComponent(jButton2))))
+                                .addComponent(editVehicle)
+                                .addComponent(deleteVehicle))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
@@ -240,9 +252,36 @@ public final class VehicleTopComponent extends TopComponent{
         componentOpened();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void deleteVehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteVehicleActionPerformed
+        // TODO add your handling code here:
+        if(jTable1.getSelectedRowCount()>0){
+            Vehicle vehicle = vehicles.getRow(jTable1.getSelectedRow());
+            NotifyDescriptor d;
+            d = new NotifyDescriptor.Confirmation("Are you sure you want to delete"+vehicle.getDescription(),
+                    "Confirm Vehicle deletion");
+            if (DialogDisplayer.getDefault().notify(d)== NotifyDescriptor.YES_OPTION){
+                DataModel.deleteVehicle(vehicle);
+                vehicles.getData().remove(vehicle);
+                vehicles.fireTableDataChanged();
+            }
+        }
+    }//GEN-LAST:event_deleteVehicleActionPerformed
+
+    private void editVehicleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editVehicleActionPerformed
+        // TODO add your handling code here:
+        if(jTable1.getSelectedRowCount()>0){
+            Vehicle vehicle;
+            vehicle = EditVehicleDialog.editVehicle(vehicles.getRow(jTable1.getSelectedRow()));
+            if(vehicle!=null){
+                DataModel.updateVehicle(vehicle);
+                vehicles.fireTableDataChanged();
+            }
+        }
+    }//GEN-LAST:event_editVehicleActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton deleteVehicle;
+    private javax.swing.JButton editVehicle;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

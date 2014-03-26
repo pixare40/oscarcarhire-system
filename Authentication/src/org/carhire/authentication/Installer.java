@@ -10,13 +10,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import javax.swing.JMenuItem;
 import org.openide.DialogDescriptor;
 import org.openide.DialogDisplayer;
 import org.openide.LifecycleManager;
 import org.openide.NotifyDescriptor;
 import org.openide.modules.ModuleInstall;
+import org.carhire.authentication.SecurityManager;
+import org.openide.util.actions.Presenter;
 
-public class Installer extends ModuleInstall implements ActionListener {
+public class Installer extends ModuleInstall implements ActionListener,Presenter.Menu {
     private LoginPanel panel = new LoginPanel();
     private DialogDescriptor d = null;
     
@@ -39,6 +42,7 @@ public class Installer extends ModuleInstall implements ActionListener {
     }
     
     
+    @Override
     public void actionPerformed(ActionEvent e){
         if(e.getSource()==DialogDescriptor.CANCEL_OPTION){
             LifecycleManager.getDefault().exit();
@@ -47,8 +51,14 @@ public class Installer extends ModuleInstall implements ActionListener {
                 panel.setInfo("Wrong Username or Password");
             }else{
                 d.setClosingOptions(null);
+                //SecurityManager.setIsAuthenticated(true);
             }
         }
+    }
+
+    @Override
+    public JMenuItem getMenuPresenter() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
