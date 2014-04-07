@@ -15,6 +15,8 @@ import org.openide.awt.ActionReference;
 import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 import javax.swing.table.AbstractTableModel;
+import org.openide.DialogDisplayer;
+import org.openide.NotifyDescriptor;
 
 /**
  * Top component which displays something.
@@ -75,6 +77,8 @@ public final class CustomerTopComponent extends TopComponent {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField5 = new javax.swing.JTextField();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(CustomerTopComponent.class, "CustomerTopComponent.jLabel1.text")); // NOI18N
@@ -118,8 +122,22 @@ public final class CustomerTopComponent extends TopComponent {
         });
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton4, org.openide.util.NbBundle.getMessage(CustomerTopComponent.class, "CustomerTopComponent.jButton4.text")); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(jButton5, org.openide.util.NbBundle.getMessage(CustomerTopComponent.class, "CustomerTopComponent.jButton5.text")); // NOI18N
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(CustomerTopComponent.class, "CustomerTopComponent.jLabel6.text")); // NOI18N
+
+        jTextField5.setText(org.openide.util.NbBundle.getMessage(CustomerTopComponent.class, "CustomerTopComponent.jTextField5.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -140,15 +158,16 @@ public final class CustomerTopComponent extends TopComponent {
                                 .addComponent(jLabel2)
                                 .addComponent(jLabel3)
                                 .addComponent(jLabel4)
-                                .addComponent(jLabel5)))
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel6)))
                         .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jTextField1)
-                                .addComponent(jTextField2)
-                                .addComponent(jTextField3)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
-                            .addComponent(jButton2))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1)
+                            .addComponent(jTextField2)
+                            .addComponent(jTextField3)
+                            .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                            .addComponent(jButton2)
+                            .addComponent(jTextField5))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,7 +201,11 @@ public final class CustomerTopComponent extends TopComponent {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -210,6 +233,7 @@ public final class CustomerTopComponent extends TopComponent {
         customer.setCreditcard(jTextField2.getText());
         customer.setAddress(jTextField3.getText());
         customer.setPhonenumber(jTextField4.getText());
+        customer.setEmailaddress(jTextField5.getText());
         en.persist(customer);
         en.getTransaction().commit();
         en.close();
@@ -219,6 +243,31 @@ public final class CustomerTopComponent extends TopComponent {
         // TODO add your handling code here:
         componentOpened();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        if(jTable1.getSelectedRowCount()>0){
+            Customer customer = EditCustomerDialog.editCustomer(customers.getRow(jTable1.getSelectedRow()));
+            if(customer!=null){
+                DataModel.updateCustomer(customer);
+                customers.fireTableDataChanged();
+            }
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        if(jTable1.getSelectedRowCount()>0){
+            Customer customer = customers.getRow(jTable1.getSelectedRow());
+            NotifyDescriptor d = new NotifyDescriptor.Confirmation("Are you sure you want to delete "+ customer.getFullname(),
+                    "Confirm Deletion");
+            if(DialogDisplayer.getDefault().notify(d)==NotifyDescriptor.YES_OPTION){
+                DataModel.deleteCustomer(customer);
+                customers.getData().remove(customer);
+                customers.fireTableDataChanged();
+            }
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -231,6 +280,7 @@ public final class CustomerTopComponent extends TopComponent {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
@@ -238,6 +288,7 @@ public final class CustomerTopComponent extends TopComponent {
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField jTextField5;
     // End of variables declaration//GEN-END:variables
     @Override
     public void componentOpened() {
@@ -264,8 +315,8 @@ public final class CustomerTopComponent extends TopComponent {
         // TODO read your settings according to their version
     }
     
-    private static final class CustomerTableModel extends AbstractTableModel{
-        public String[] columns = {"Customer Name","Credit Card Number","Address","Phonenumber"};
+    public static final class CustomerTableModel extends AbstractTableModel{
+        public String[] columns = {"Customer Name","Credit Card Number","Address","Phonenumber","Email Address"};
         public Vector<Customer> data = new Vector<Customer>();
         
         public Customer getRow(int row){
@@ -296,6 +347,8 @@ public final class CustomerTopComponent extends TopComponent {
                     return customer.getAddress();
                 case 3:
                     return customer.getPhonenumber();
+                case 4:
+                    return customer.getEmailaddress();
             }
             return "";
             //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.

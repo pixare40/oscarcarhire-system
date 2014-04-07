@@ -214,9 +214,9 @@ public final class VehicleTopComponent extends TopComponent{
                                 .addComponent(editVehicle)
                                 .addComponent(deleteVehicle))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -327,7 +327,7 @@ public final class VehicleTopComponent extends TopComponent{
         // TODO read your settings according to their version
     }
     
-    private static final class VehicleTableModel extends AbstractTableModel{
+    public static final class VehicleTableModel extends AbstractTableModel{
         private Vector<Vehicle> data = new Vector<Vehicle>();
         private String[] columns = {"Vehicle Status","Vehicle Class"," Vehicle Description","Vehicle Availability"};
         

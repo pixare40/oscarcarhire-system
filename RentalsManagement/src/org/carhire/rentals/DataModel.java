@@ -21,11 +21,10 @@ public class DataModel {
 
     //@SuppressWarning("unchecked")
     public static List<Branch> getBranches() {
-        EntityManager entityManager = Persistence.createEntityManagerFactory("DataEnttiesPU").createEntityManager();
-        entityManager.getTransaction().begin();
-        Query query = entityManager.createQuery("SELECT b from Branch b");
+        Installer.EM.getTransaction().begin();
+        Query query = Installer.EM.createQuery("SELECT b from Branch b");
         List<Branch> list = (List<Branch>)query.getResultList();
-        entityManager.getTransaction().commit();
+        Installer.EM.getTransaction().commit();
         return list;
     }
     
@@ -45,12 +44,11 @@ public class DataModel {
         return list;
     }
 
-    static List<Customer> getCustomers() {
-        EntityManager entityManager = Persistence.createEntityManagerFactory("DataEnttiesPU").createEntityManager();
-        entityManager.getTransaction().begin();
-        Query q = entityManager.createQuery("SELECT c from Customer c");
+    public static List<Customer> getCustomers() {
+        Installer.EM.getTransaction().begin();
+        Query q = Installer.EM.createQuery("SELECT c from Customer c");
         List<Customer> list = (List<Customer>)q.getResultList();
-        entityManager.getTransaction().commit();
+        Installer.EM.getTransaction().commit();
         return list;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -62,6 +60,34 @@ public class DataModel {
     }
 
     static void updateVehicle(Vehicle vehicle) {
+        Installer.EM.getTransaction().begin();
+        Installer.EM.persist(vehicle);
+        Installer.EM.getTransaction().commit();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    static void updateCustomer(Customer customer) {
+        Installer.EM.getTransaction().begin();
+        Installer.EM.persist(customer);
+        Installer.EM.getTransaction().commit();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    static void deleteCustomer(Customer customer) {
+        Installer.EM.getTransaction().begin();
+        Installer.EM.remove(customer);
+        Installer.EM.getTransaction().commit();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static void createCustomer(Customer customer) {
+        Installer.EM.getTransaction().begin();
+        Installer.EM.persist(customer);
+        Installer.EM.getTransaction().commit();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static void createVehicle(Vehicle vehicle) {
         Installer.EM.getTransaction().begin();
         Installer.EM.persist(vehicle);
         Installer.EM.getTransaction().commit();
