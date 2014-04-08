@@ -93,6 +93,73 @@ public class DataModel {
         Installer.EM.getTransaction().commit();
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    static List<Booking> getCustomerBookings(Customer customer) {
+        Installer.EM.getTransaction().begin();
+        Query q = Installer.EM.createQuery("SELECT b from Booking b WHERE b.customer ="+customer);
+        List<Booking> list = (List<Booking>)q.getResultList();
+        Installer.EM.getTransaction().commit();
+        return list;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    static void updateBooking(Booking book) {
+        Installer.EM.getTransaction().begin();
+        Installer.EM.persist(book);
+        Installer.EM.getTransaction().commit();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static Staff authenticateUser(String username, String password) {
+        Installer.EM.getTransaction().begin();
+        Query q = Installer.EM.createQuery("SELECT s from Staff s WHERE s.username ="+username);
+        Staff mem = (Staff)q.getSingleResult();
+        System.out.print(mem);
+        if (mem.getPassword()==password){
+            return mem;
+        }
+        else{
+            return null;
+        }
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public static void isAdmin(Staff staff) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    static void createStaff(Staff staff) {
+        Installer.EM.getTransaction().begin();
+        Installer.EM.persist(staff);
+        Installer.EM.getTransaction().commit();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    static List<Booking> getBookings() {
+        Installer.EM.getTransaction().begin();
+        Query q = Installer.EM.createQuery("SELECT b from Booking b");
+        List<Booking> list = (List<Booking>)q.getResultList();
+        Installer.EM.getTransaction().commit();
+        return list;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    static void cancelBooking(Booking book) {
+        Installer.EM.getTransaction().begin();
+        book.setCancelled(true);
+        Installer.EM.persist(book);
+        Installer.EM.getTransaction().commit();
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    static Collection<Booking> getBranchBookings(long branchid) {
+        Installer.EM.getTransaction().begin();
+        Query q = Installer.EM.createQuery("SELECT b from Booking b WHERE b.branch ="+branchid);
+        List<Booking> list = (List<Booking>)q.getResultList();
+        Installer.EM.getTransaction().commit();
+        return list;
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

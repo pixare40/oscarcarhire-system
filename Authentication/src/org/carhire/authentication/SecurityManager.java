@@ -7,9 +7,7 @@
 package org.carhire.authentication;
 
 import dataentities.Staff;
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
+import org.carhire.rentals.DataModel;
 
 /**
  *
@@ -20,8 +18,9 @@ public class SecurityManager {
      public static boolean login(String username, String password) {
       if(username.equals("admin") && password.equals("password")) {
          return true;
-      } else {
-         return false;
+      }
+      else{
+          return false;
       }
    }
 

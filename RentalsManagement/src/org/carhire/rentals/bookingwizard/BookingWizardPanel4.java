@@ -63,6 +63,9 @@ public class BookingWizardPanel4 implements WizardDescriptor.Panel<WizardDescrip
     @Override
     public void storeSettings(WizardDescriptor wiz) {
         // use wiz.putProperty to remember current panel state
+        wiz.putProperty("staff", ((BookingVisualPanel4)getComponent()).getStaff());
+        wiz.putProperty("branch", ((BookingVisualPanel4)getComponent()).getBranch());
+
     }
 
 }

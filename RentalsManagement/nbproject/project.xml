@@ -114,7 +114,9 @@
                     </test-dependency>
                 </test-type>
             </test-dependencies>
-            <public-packages/>
+            <public-packages>
+                <package>org.carhire.rentals</package>
+            </public-packages>
         </data>
     </configuration>
 </project>

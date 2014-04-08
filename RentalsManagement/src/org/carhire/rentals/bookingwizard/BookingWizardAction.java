@@ -80,6 +80,8 @@ public final class BookingWizardAction implements ActionListener {
             String thirdPI = (String) wiz.getProperty("thirdPI");
             Date dateRented = (Date) wiz.getProperty("daterented");
             Date dateToReturn = (Date) wiz.getProperty("dateToReturn");
+            Branch branch = (Branch)wiz.getProperty("branch");
+            Staff staff = (Staff)wiz.getProperty("staff");
             DateTime drent = new DateTime(dateRented);
             DateTime dreturn = new DateTime(dateToReturn);
             
@@ -94,10 +96,10 @@ public final class BookingWizardAction implements ActionListener {
             StringBuilder insurance = new StringBuilder();
             insurance.append("Loss Damage Waiver: "+lossDW+"\n");
             insurance.append("Personal Accidental Insurance: "+pAI+"\n");
-            insurance.append("Supplemental Loss Insuarnce: "+suppLI);
+            insurance.append("Supplemental Loss Insuarnce: "+suppLI+"\n");
             insurance.append("Third Party Insuarnce: "+thirdPI+"\n");
             String concatinsurance = insurance.toString();
-            int price = 50 * days;
+            double price =50.0 + 50 * days;
             
             
             sendReceipt(customername, customeremail, vehicledetails,paidon,returndate,concatinsurance,price);
@@ -114,12 +116,14 @@ public final class BookingWizardAction implements ActionListener {
             booking.setDateToReturn(dateToReturn);
             booking.setDateCreated(new Date());
             booking.setPrice(price);
+            booking.setBranch(branch);
+            booking.setStaff(staff);
             Installer.EM.persist(booking);
             Installer.EM.getTransaction().commit();
         }
     }
 
-    private void sendReceipt(String customer,String email, String vehicle, String paidon,String returndate, String insure,int price) {
+    private void sendReceipt(String customer,String email, String vehicle, String paidon,String returndate, String insure,double price) {
          boolean issent = true;
             try{
             Properties props = new Properties();

@@ -5,7 +5,10 @@
  */
 package org.carhire.rentals.bookingwizard;
 
+import dataentities.Branch;
+import dataentities.Staff;
 import javax.swing.JPanel;
+import org.carhire.rentals.DataModel;
 import org.openide.WizardDescriptor;
 
 public final class BookingVisualPanel4 extends JPanel {
@@ -15,6 +18,12 @@ public final class BookingVisualPanel4 extends JPanel {
      */
     public BookingVisualPanel4() {
         initComponents();
+        for(Branch b:DataModel.getBranches()){
+            jComboBox1.addItem(b);
+        }
+        for(Staff s:DataModel.getStaffs()){
+            jComboBox2.addItem(s);
+        }
     }
 
     @Override
@@ -22,6 +31,13 @@ public final class BookingVisualPanel4 extends JPanel {
         return "Confirmation";
     }
     
+    public Branch getBranch(){
+        Branch branch = (Branch) jComboBox1.getSelectedItem();
+        return branch;
+    }
+    public Staff getStaff(){
+        return (Staff)jComboBox2.getSelectedItem();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,9 +51,9 @@ public final class BookingVisualPanel4 extends JPanel {
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox();
+        jComboBox2 = new javax.swing.JComboBox();
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(BookingVisualPanel4.class, "BookingVisualPanel4.jLabel1.text")); // NOI18N
@@ -48,13 +64,7 @@ public final class BookingVisualPanel4 extends JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(BookingVisualPanel4.class, "BookingVisualPanel4.jLabel2.text")); // NOI18N
 
-        jTextField1.setEditable(false);
-        jTextField1.setText(org.openide.util.NbBundle.getMessage(BookingVisualPanel4.class, "BookingVisualPanel4.jTextField1.text")); // NOI18N
-
         org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(BookingVisualPanel4.class, "BookingVisualPanel4.jLabel3.text")); // NOI18N
-
-        jTextField2.setEditable(false);
-        jTextField2.setText(org.openide.util.NbBundle.getMessage(BookingVisualPanel4.class, "BookingVisualPanel4.jTextField2.text")); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -72,9 +82,9 @@ public final class BookingVisualPanel4 extends JPanel {
                             .addComponent(jLabel3))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 95, Short.MAX_VALUE)
-                            .addComponent(jTextField1))))
-                .addContainerGap(177, Short.MAX_VALUE))
+                            .addComponent(jComboBox2, 0, 118, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(154, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,11 +98,11 @@ public final class BookingVisualPanel4 extends JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(149, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -100,10 +110,10 @@ public final class BookingVisualPanel4 extends JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
